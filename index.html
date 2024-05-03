@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!--Created by Daniel-->
+  <title>Grade Checker</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f7f7f7;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+    }
+    #container {
+      margin: 5px;
+      max-width: 600px;
+      padding: 20px;
+      background-color: #fff;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      text-align: center;
+    }
+    h1 {
+      color: #333;
+    }
+    input[type="text"] {
+      padding: 10px;
+      margin-bottom: 20px;
+      width: 100%;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      box-sizing: border-box;
+    }
+    button {
+      padding: 10px 20px;
+      background-color: #4CAF50;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    button:hover {
+      background-color: #45a049;
+    }
+    .message {
+      margin-top: 20px;
+      font-size: 18px;
+      color: #333;
+    }
+    #heart-container {
+      position: relative;
+      margin-top: 20px;
+    }
+    .heart {
+      position: absolute;
+      animation: float 3s infinite ease-in-out;
+    }
+    .big-heart {
+      position: absolute;
+      font-size: 100px;
+      color: red;
+      animation: explode 0.5s forwards;
+    }
+    @keyframes explode {
+      0% {
+        transform: scale(0);
+        opacity: 1;
+      }
+      100% {
+        transform: scale(5);
+        opacity: 0;
+      }
+    }
+    @keyframes float {
+      0% {
+        transform: translateY(0);
+      }
+      50% {
+        transform: translateY(-20px);
+      }
+      100% {
+        transform: translateY(0);
+      }
+    }
+  </style>
+</head>
+<body>
+  <div id="container">
+    <h1>Grade Checker</h1>
+    <input type="text" id="score" placeholder="Enter your exam score">
+    <button onclick="checkGrade()">Check Grade</button>
+    <div id="message" class="message"></div>
+    <div id="heart-container"></div>
+  </div>
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+
+  <script>
+    function checkGrade() {
+      var score = document.getElementById('score').value;
+      var messageElement = document.getElementById('message');
+      var heartContainer = document.getElementById('heart-container');
+
+      var grade;
+      if (score >= 280) {
+        grade = 'A';
+      } else if (score >= 240) {
+        grade = 'B';
+      } else if (score >= 200) {
+        grade = 'C';
+      } else if (score >= 160) {
+        grade = 'D';
+      } else {
+        grade = 'F';
+      }
+
+      messageElement.innerHTML = "Your grade is " + grade + ". You did great! This is impressive, okay?<br><br>From Daniel";
+
+      var bigHeart = document.createElement('i');
+      bigHeart.classList.add('heart', 'big-heart', 'fa', 'fa-heart');
+      heartContainer.appendChild(bigHeart);
+      setTimeout(function() {
+        bigHeart.remove();
+      }, 500);
+
+      for (var i = 0; i < 30; i++) {
+        createHeart(heartContainer);
+      }
+    }
+
+    function createHeart(container) {
+      var heart = document.createElement('i');
+      heart.classList.add('heart', 'fa', 'fa-heart');
+      heart.style.color = randomColor();
+      heart.style.left = randomPosition(container.clientWidth) + 'px';
+      heart.style.top = randomPosition(container.clientHeight) + 'px';
+      heart.style.animationDuration = (Math.random() * 3 + 1) + 's';
+      container.appendChild(heart);
+      setTimeout(function() {
+        container.removeChild(heart);
+      }, 3000);
+    }
+
+    function randomPosition(max) {
+      return Math.floor(Math.random() * max);
+    }
+
+    function randomColor() {
+      var letters = '0123456789ABCDEF';
+      var color = '#';
+      for (var i = 0; i < 6; i++) {
+        color += letters[Math.floor(Math.random() * 16)];
+      }
+      return color;
+    }
+  </script>
+</body>
+</html>
